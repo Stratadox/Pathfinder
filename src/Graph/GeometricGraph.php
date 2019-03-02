@@ -17,12 +17,14 @@ final class GeometricGraph implements Environment
 
     private function __construct(GeometricVertex ...$vertices)
     {
-        $this->vertices = array_combine(
+        /** @var GeometricVertex[] */
+        $verticesByLabel = array_combine(
             array_map(function (Vertex $vertex): string {
                 return $vertex->label();
             }, $vertices),
             $vertices
         );
+        $this->vertices = $verticesByLabel;
         $this->ids = Ids::for(...$vertices);
     }
 

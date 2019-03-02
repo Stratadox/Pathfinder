@@ -16,12 +16,14 @@ final class Graph implements Network
 
     private function __construct(Vertex ...$vertices)
     {
-        $this->vertices = array_combine(
+        /** @var Vertex[] */
+        $verticesByLabel = array_combine(
             array_map(function (Vertex $vertex): string {
                 return $vertex->label();
             }, $vertices),
             $vertices
         );
+        $this->vertices = $verticesByLabel;
         $this->ids = Ids::for(...$vertices);
     }
 

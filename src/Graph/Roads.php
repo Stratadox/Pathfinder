@@ -5,19 +5,17 @@ namespace Stratadox\Pathfinder\Graph;
 use Stratadox\ImmutableCollection\Appending;
 use Stratadox\ImmutableCollection\ImmutableCollection;
 use Stratadox\ImmutableCollection\Merging;
-use Stratadox\Pathfinder\Graph\Edge;
-use Stratadox\Pathfinder\Graph\Edges;
 
 final class Roads extends ImmutableCollection implements Edges
 {
     use Appending, Merging;
 
-    protected function __construct(Road ...$roads)
+    protected function __construct(Edge ...$roads)
     {
         parent::__construct(...$roads);
     }
 
-    public static function available(Road ...$roads): Edges
+    public static function available(Edge ...$roads): Edges
     {
         return new self(...$roads);
     }
