@@ -7,13 +7,19 @@ use ArrayAccess;
 /**
  * Position.
  *
- * A position is a geographical location in Euclidean space, represented as a
- * set of Cartesian coordinates.
+ * A position is a geographical point in Euclidean space, represented as a set
+ * of Cartesian coordinates.
  *
  * @api
  * @author Stratadox
  */
 interface Position extends ArrayAccess
 {
-    public function offsetGet($offset): float;
+    /**
+     * Retrieves the position along the given axis.
+     *
+     * @param int $axis The offset of the axis.
+     * @return float    The position along the axis.
+     */
+    public function offsetGet($axis): float;
 }

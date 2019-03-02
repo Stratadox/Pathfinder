@@ -16,8 +16,7 @@ interface MultiPathfinder
     /**
      * Finds the shortest paths from a given start to all possible goals.
      *
-     * @param string $start    A string representation of the label that
-     *                         identifies the start node.
+     * @param string $start    The label of the start node.
      * @return string[][]      A map of arrays as [goal => path], where path is
      *                         an array of the labels of the nodes that form the
      *                         shortest path.

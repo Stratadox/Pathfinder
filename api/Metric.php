@@ -14,7 +14,8 @@ interface Metric
     /**
      * Retrieves the distance between two points.
      *
-     * The start and goal vertices must have the same number of dimensions.
+     * The start and goal vertices are assumed to have the same number of
+     * dimensions.
      *
      * @param Position $start The start coordinates.
      * @param Position $goal  The goal coordinates.

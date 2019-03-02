@@ -14,10 +14,10 @@ namespace Stratadox\Pathfinder;
 interface SinglePathfinder
 {
     /**
-     * @param string $start    A string representation of the label that
-     *                         identifies the start node.
-     * @param string $goal     A string representation of the label that
-     *                         identifies the goal node.
+     * Finds the shortest path from a given start node to a particular goal node.
+     *
+     * @param string $start    The label of the start node.
+     * @param string $goal     The label of the goal node.
      * @return string[]        The labels of the nodes that form the path.
      * @throws NoPathAvailable When no possible paths are available.
      */
