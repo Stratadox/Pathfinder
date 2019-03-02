@@ -1,6 +1,10 @@
 # Pathfinder
 A motion planning solution for PHP.
 
+[![Build Status](https://travis-ci.org/Stratadox/Pathfinder.svg?branch=master)](https://travis-ci.org/Stratadox/Pathfinder)
+[![Coverage Status](https://coveralls.io/repos/github/Stratadox/Pathfinder/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/Pathfinder?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/Pathfinder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/Pathfinder/?branch=master)
+
 ## Installation
 Install using `composer require stratadox/pathfinder`
 
