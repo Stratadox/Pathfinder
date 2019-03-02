@@ -172,7 +172,7 @@ A*'s [open/closed sets](https://en.wikipedia.org/wiki/Open_set)
 Euclidean distance is used by default, a different one can be specified using, 
 for example:
 ```php
-DynamicPathfinder::withHeurisic(Chebyshev::dimensions(2), $environment);
+DynamicPathfinder::withHeuristic(Chebyshev::dimensions(2), $environment);
 ```
 
 When available, a map of the environment (the [Floyd-Warshall](#floyd-warshall) 
