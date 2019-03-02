@@ -172,14 +172,29 @@ A*'s [open/closed sets](https://en.wikipedia.org/wiki/Open_set)
 Euclidean distance is used by default, a different one can be specified using, 
 for example:
 ```php
-DynamicPathfinder::withHeuristic(Chebyshev::dimensions(2), $environment);
+<?php
+use Stratadox\Pathfinder\DynamicPathfinder;
+use Stratadox\Pathfinder\Estimate\Estimate;
+use Stratadox\Pathfinder\Distance\Chebyshev;
+
+/** @var \Stratadox\Pathfinder\Environment $environment */
+DynamicPathfinder::withHeuristic(Estimate::costAs(
+    Chebyshev::inDimensions(2), 
+    $environment
+));
 ```
 
 When available, a map of the environment (the [Floyd-Warshall](#floyd-warshall) 
 result) can be provided using:
 ```php
+<?php
+use Stratadox\Pathfinder\DynamicPathfinder;
+use Stratadox\Pathfinder\Estimate\FromPreviousEnvironment;
+
+/** @var \Stratadox\Pathfinder\Indexer $indexer */
+/** @var \Stratadox\Pathfinder\Environment $environment */
 DynamicPathfinder::withHeuristic(FromPreviousEnvironment::state(
-    $heuristic, 
+    $indexer->heuristic(), 
     $environment
 ));
 ```
@@ -221,6 +236,10 @@ called [networks](Graphs.md#networks).
 Although the pathfinder cannot make use of heuristics to speed up the search, 
 it can still adequately find the cheapest path.
 ```php
+<?php
+use Stratadox\Pathfinder\Graph\Builder\GraphNetwork;
+use Stratadox\Pathfinder\Graph\Builder\WithEdge;
+
 GraphNetwork::create()
     ->withVertex('A', WithEdge::to('B', 5)->andTo('C', 8))
     ->withVertex('B', WithEdge::to('D', 9)->andTo('A', 1))
