@@ -1,0 +1,30 @@
+{
+    "name": "stratadox/pathfinder",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stratadox",
+            "homepage": "http://www.stratadox.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Stratadox\\Pathfinder\\": ["src", "api"]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stratadox\\Pathfinder\\Test\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "stratadox/immutable-collection": "^1.1"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.0",
+        "php-coveralls/php-coveralls": "^2.1",
+        "phpstan/phpstan": "^0.11.1"
+    }
+}

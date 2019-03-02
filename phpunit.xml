@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+    colors="true"
+    cacheResult="false"
+>
+    <testsuites>
+        <testsuite name="Functionality">
+            <directory suffix=".php">tests/Functionality</directory>
+        </testsuite>
+        <testsuite name="Efficiency">
+            <directory suffix=".php">tests/Efficiency</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml" />
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" />
+    </logging>
+
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="intl.default_locale" value="en" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="memory_limit" value="512M" />
+        <server name="speed_test" value="0" />
+    </php>
+</phpunit>

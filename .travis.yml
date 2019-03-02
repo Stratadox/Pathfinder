@@ -1,0 +1,31 @@
+language:
+  php
+
+php:
+  - '7.2'
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+before_script:
+  - composer install
+  - wget https://github.com/infection/infection/releases/download/0.8.1/infection.phar
+  - wget https://github.com/infection/infection/releases/download/0.8.1/infection.phar.pubkey
+  - chmod +x infection.phar
+
+script:
+  - mkdir -p build/logs
+  - vendor/bin/phpunit -c phpunit.xml --testdox
+#  - vendor/bin/phpunit -c performance.xml --testsuite=Performance --testdox
+  - vendor/bin/phpstan analyse src tests --level=7
+  - ./infection.phar --min-msi=95 --min-covered-msi=100
+  - touch build/logs/infection-log.txt
+  - cat build/logs/infection-log.txt
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
+
+notifications:
+  email: false
