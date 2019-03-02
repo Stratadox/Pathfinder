@@ -178,7 +178,10 @@ DynamicPathfinder::withHeurisic(Chebyshev::dimensions(2), $environment);
 When available, a map of the environment (the [Floyd-Warshall](#floyd-warshall) 
 result) can be provided using:
 ```php
-DynamicPathfinder::withMap($map, $environment);
+DynamicPathfinder::withHeuristic(FromPreviousEnvironment::state(
+    $heuristic, 
+    $environment
+));
 ```
 Since the environment is assumed to be dynamic, the map is only used as [A*](#a*)
 heuristic.
