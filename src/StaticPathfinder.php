@@ -43,7 +43,7 @@ final class StaticPathfinder implements Pathfinder
     {
         $path = [$start];
         $node = $start;
-        while ($node && $node !== $goal) {
+        while ($node !== $goal) {
             $node = $this->index->nextStepOnTheRoadBetween($node, $goal);
             $path[] = $node;
         }
