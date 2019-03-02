@@ -247,3 +247,10 @@ GraphNetwork::create()
     ->withVertex('D', WithEdge::to('B', 3)->andTo('C', 9))
     ->make();
 ```
+
+## Using your own network
+What if you already have a graph mechanism? Maybe your graph is already modeled, 
+maybe it follows a certain structure of a particular A/R ORM.
+
+In such cases, simply implement the [Network](api/Network.php) or [Environment](api/Environment.php) 
+interface (either directly or through an adapter) and you're good to go!
