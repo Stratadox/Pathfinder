@@ -25,6 +25,8 @@
         "roave/security-advisories": "dev-master",
         "phpunit/phpunit": "^8.0",
         "php-coveralls/php-coveralls": "^2.1",
-        "phpstan/phpstan": "^0.11.1"
+        "phpstan/phpstan": "^0.11.1",
+        "phpstan/phpstan-strict-rules": "^0.11.0",
+        "localheinz/phpstan-rules": "^0.7.1"
     }
 }

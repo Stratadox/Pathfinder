@@ -70,7 +70,7 @@ final class GridEnvironment
         $finalPart = $column % 26;
         $letter = chr(65 + $finalPart);
         $firstPart = (int) ($column / 26);
-        if (!$firstPart) {
+        if ($firstPart <= 0) {
             return $letter;
         }
         return self::textual($firstPart - 1) . $letter;
