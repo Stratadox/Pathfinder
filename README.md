@@ -116,7 +116,7 @@ point A to all other reachable points in one go.
 
 It is generally slower than [A*](#a*) for finding single paths, unless no 
 heuristics are available. When looking for *all* paths from a single source, 
-however, Dijkstra's algorithm 
+however, Dijkstra's algorithm is usually the preferred pathfinding choice.
 
 #### A*
 A quick algorithm for finding paths at runtime is the [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm).
