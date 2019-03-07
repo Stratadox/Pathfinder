@@ -110,12 +110,13 @@ algorithm that makes no assumptions about unknown routes. (I.e. it is free of
 
 [![Illustration of Dijkstra's algorithm finding a path from a start node to a goal node](https://upload.wikimedia.org/wikipedia/commons/2/23/Dijkstras_progress_animation.gif)](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#/media/File:Dijkstras_progress_animation.gif)
 
-Using Dijkstra's algorithm can lead to better performance compared to [A*](#a*) 
-in cases where no heuristics are available or applicable.
+This algorithm can be used for both single- and multi path searches: as well as 
+finding the shortest path from point A to B, it can find the shortest paths from 
+point A to all other reachable points in one go.
 
-Examples of such scenarios are when the environment has no coordinates to base 
-a heuristic ranking on, or when searching for the shortest paths to *all* 
-possible end vertices from a particular start vertex or vice-versa.
+It is generally slower than [A*](#a*) for finding single paths, unless no 
+heuristics are available. When looking for *all* paths from a single source, 
+however, Dijkstra's algorithm 
 
 #### A*
 A quick algorithm for finding paths at runtime is the [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm).
@@ -138,9 +139,18 @@ Alternatively, [Taxicab distance](https://en.wikipedia.org/wiki/Taxicab_geometry
 can be used, as well as [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance) 
 or the result of the [Floyd-Warshall algorithm](#floyd-warshall).
 
+#### Bellman–Ford
+Commonly known as the Bellman–Ford algorithm, yet invented by Alfonso Shimbel, 
+this algorithm is slower but more versatile than [Dijkstra's algorithm](#dijkstra)
+for finding all shortest paths from a given source.
+
+The speed sacrifice is made when the graph may contain negative-cost cycles, in 
+which case this algorithm beats Dijkstra's hands-down, since Dijkstra's would 
+continue searching for eternity.
+
 #### Floyd-Warshall
 The [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm) 
-is used to find *all* paths, between each possible start vertex and each 
+(invented by Bernard Roy) is used to find *all* paths, between each possible start vertex and each 
 possible end vertex.
 
 With an *O(**v**^3)* runtime, **v** being the amount of vertices, the 
@@ -254,3 +264,6 @@ maybe it follows a certain structure of a particular A/R ORM.
 
 In such cases, simply implement the [Network](api/Network.php) or [Environment](api/Environment.php) 
 interface (either directly or through an adapter) and you're good to go!
+
+For an example of how such an adapter would look like, see the [graphp finder 
+package](https://github.com/Stratadox/GraphpFinder).
