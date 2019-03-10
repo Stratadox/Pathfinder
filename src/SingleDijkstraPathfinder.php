@@ -2,17 +2,19 @@
 
 namespace Stratadox\Pathfinder;
 
-use function array_reverse;
 use const INF;
 use SplPriorityQueue;
+use Stratadox\Pathfinder\Reconstruction\PathRetracer;
 
 final class SingleDijkstraPathfinder implements SinglePathfinder
 {
     private $network;
+    private $path;
 
     private function __construct(Network $network)
     {
         $this->network = $network;
+        $this->path = new PathRetracer();
     }
 
     public static function operatingIn(Network $graph): SinglePathfinder
@@ -37,14 +39,7 @@ final class SingleDijkstraPathfinder implements SinglePathfinder
             $underConsideration->next();
 
             if ($goal === $node) {
-                $path = [];
-                $currentPosition = $node;
-                while (isset($lastStepBefore[$currentPosition])) {
-                    $path[] = $currentPosition;
-                    $currentPosition = $lastStepBefore[$currentPosition];
-                }
-                $path[] = $start;
-                return array_reverse($path);
+                return $this->path->retrace($start, $goal, $lastStepBefore);
             }
 
             foreach ($this->network->neighboursOf($node) as $neighbour) {

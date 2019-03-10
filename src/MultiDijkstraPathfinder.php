@@ -5,14 +5,17 @@ namespace Stratadox\Pathfinder;
 use function array_reverse;
 use const INF;
 use SplPriorityQueue;
+use Stratadox\Pathfinder\Reconstruction\PathRetracer;
 
 final class MultiDijkstraPathfinder implements MultiPathfinder
 {
     private $network;
+    private $path;
 
     private function __construct(Network $network)
     {
         $this->network = $network;
+        $this->path = new PathRetracer();
     }
 
     public static function operatingIn(Network $graph): MultiPathfinder
@@ -25,18 +28,12 @@ final class MultiDijkstraPathfinder implements MultiPathfinder
         return $this->shortestPaths($this->startingAt($start), $start);
     }
 
-    private function shortestPaths(array $lastStepsBefore, string $start): array
+    private function shortestPaths(array $lastSteps, string $start): array
     {
         $paths = [];
-        foreach ($lastStepsBefore as $goal => $lastStep) {
+        foreach ($lastSteps as $goal => $lastStep) {
             if ($goal !== $start) {
-                $path = [$goal];
-                while (isset($lastStepsBefore[$lastStep])) {
-                    $path[] = $lastStep;
-                    $lastStep = $lastStepsBefore[$lastStep];
-                }
-                $path[] = $start;
-                $paths[$goal] = array_reverse($path);
+                $paths[$goal] = $this->path->retrace($start, $goal, $lastSteps);
             }
         }
         return $paths;

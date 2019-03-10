@@ -2,19 +2,21 @@
 
 namespace Stratadox\Pathfinder;
 
-use function array_reverse;
 use const INF;
 use SplPriorityQueue;
+use Stratadox\Pathfinder\Reconstruction\PathRetracer;
 
 final class AStarPathfinder implements SinglePathfinder
 {
     private $environment;
     private $heuristic;
+    private $path;
 
     private function __construct(Environment $environment, Heuristic $heuristic)
     {
         $this->environment = $environment;
         $this->heuristic = $heuristic;
+        $this->path = new PathRetracer();
     }
 
     public static function withHeuristic(Heuristic $heuristic): self
@@ -42,13 +44,7 @@ final class AStarPathfinder implements SinglePathfinder
             $underConsideration->next();
 
             if ($goal === $node) {
-                $path = [];
-                while (isset($lastStepBefore[$node])) {
-                    $path[] = $node;
-                    $node = $lastStepBefore[$node];
-                }
-                $path[] = $start;
-                return array_reverse($path);
+                return $this->path->retrace($start, $goal, $lastStepBefore);
             }
 
             foreach ($this->environment->neighboursOf($node) as $neighbour) {
