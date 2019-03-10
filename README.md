@@ -148,6 +148,9 @@ The speed sacrifice is made when the graph may contain negative-cost cycles, in
 which case this algorithm beats Dijkstra's hands-down, since Dijkstra's would 
 continue searching for eternity.
 
+The Bellman-Ford algorithm has the ability to stop and detect such negative 
+cycles, throwing an exception instead of eating infinite resources.
+
 #### Floyd-Warshall
 The [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm) 
 (invented by Bernard Roy) is used to find *all* paths, between each possible start vertex and each 
@@ -169,11 +172,14 @@ Floyd-Warshall algorithm may be used as a heuristic for the [A*](#a*) search.
 ### Flavours
 #### Dynamic Pathfinder
 The Dynamic Pathfinder is an automatically composing pathfinder that alternates 
-between using the [A*](#a*) and [Dijkstra's](#dijkstra) algorithms based on the 
-type of request and environment.
+between using the [A*](#a*), [Bellman-Ford](#bellman–ford) and [Dijkstra's](#dijkstra) 
+algorithms based on the type of request and environment.
 
-For finding multiple paths, it always uses Dijkstra's algorithm. In searching 
-for a single path, A* is used when:
+For finding multiple paths, it uses Dijkstra's algorithm - except when the graph
+contains negative edge weights, in which case Bellman-Ford is applied.
+
+In searching for a single path, Dijkstra's algorithm can also be applied. 
+A* is used when:
 - the path traverses a [geographical environment](#environments), to take 
 advantage of guidance by heuristics
 - the graph contains edges with negative costs, to prevent infinite loops with 
