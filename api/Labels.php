@@ -2,7 +2,7 @@
 
 namespace Stratadox\Pathfinder;
 
-use Stratadox\Collection\Reducible;
+use Stratadox\Collection\Collection;
 
 /**
  * Labels.
@@ -12,7 +12,7 @@ use Stratadox\Collection\Reducible;
  * @api
  * @author Stratadox
  */
-interface Labels extends Reducible
+interface Labels extends Collection
 {
     /**
      * Retrieves the label at the current position in the list.

@@ -4,13 +4,10 @@ namespace Stratadox\Pathfinder\Graph;
 
 use function array_map;
 use Stratadox\ImmutableCollection\ImmutableCollection;
-use Stratadox\ImmutableCollection\Reducing;
 use Stratadox\Pathfinder\Labels;
 
 final class Ids extends ImmutableCollection implements Labels
 {
-    use Reducing;
-
     private function __construct(string ...$labels)
     {
         parent::__construct(...$labels);
