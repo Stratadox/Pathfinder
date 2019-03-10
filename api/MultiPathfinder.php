@@ -20,7 +20,7 @@ interface MultiPathfinder
      * @return string[][]      A map of arrays as [goal => path], where path is
      *                         an array of the labels of the nodes that form the
      *                         shortest path.
-     * @throws NoPathAvailable When the start node does not exist.
+     * @throws NoPathAvailable When the shortest paths could not be calculated.
      */
     public function from(string $start): array;
 }

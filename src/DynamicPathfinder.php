@@ -22,30 +22,38 @@ final class DynamicPathfinder implements Pathfinder
 
     public static function operatingIn(Network $environment): Pathfinder
     {
-        return new self(
-            self::singlePathfinder($environment),
-            MultiDijkstraPathfinder::operatingIn($environment)
-        );
+        return self::produceFor($environment, null);
     }
 
-    public static function withHeuristic(Heuristic $heuristic): self
+    public static function withHeuristic(Heuristic $heuristic): Pathfinder
     {
+        return self::produceFor($heuristic->environment(), $heuristic);
+    }
+
+    private static function produceFor(
+        Network $theWorld,
+        ?Heuristic $heuristic
+    ): Pathfinder {
+        $negativeEdgeCosts = $theWorld->hasNegativeEdgeCosts();
         return new self(
-            self::singlePathfinder($heuristic->environment(), $heuristic),
-            MultiDijkstraPathfinder::operatingIn($heuristic->environment())
+            self::singlePathfinder($theWorld, $heuristic, $negativeEdgeCosts),
+            $negativeEdgeCosts ?
+                BellmanFordPathfinder::operatingIn($theWorld) :
+                MultiDijkstraPathfinder::operatingIn($theWorld)
         );
     }
 
     private static function singlePathfinder(
         Network $theWorld,
-        Heuristic $heuristic = null
+        ?Heuristic $heuristic,
+        bool $negativeEdgeCosts
     ): SinglePathfinder {
         if ($theWorld instanceof Environment) {
             return AStarPathfinder::withHeuristic($heuristic ?: Safely::apply(
                 Estimate::costAs(Euclidean::distance(), $theWorld)
             ));
         }
-        if ($theWorld->hasNegativeEdgeCosts()) {
+        if ($negativeEdgeCosts) {
             return AStarPathfinder::withHeuristic($heuristic ?: Safely::apply(
                 Estimate::costAs(Euclidean::distance(), GeometricView::of($theWorld))
             ));
