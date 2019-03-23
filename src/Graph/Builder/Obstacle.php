@@ -18,7 +18,7 @@ final class Obstacle implements Field
 
     public function label(): string
     {
-        return 'N/A';
+        return '';
     }
 
     public function price(): float

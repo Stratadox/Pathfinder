@@ -9,7 +9,7 @@ use Stratadox\Pathfinder\NoPathAvailable;
 use Stratadox\Pathfinder\StaticPathfinder;
 use PHPUnit\Framework\TestCase;
 use Stratadox\Pathfinder\Test\Functionality\Fixture\Environments;
-use function var_dump;
+use Stratadox\Pathfinder\Test\Functionality\Fixture\Networks;
 
 /**
  * @testdox Finding all shortest paths in a network, using an index
@@ -19,9 +19,13 @@ class ShortestPathsBasedOnAnIndex extends TestCase
     /** @var Environments */
     private $environment;
 
+    /** @var Networks */
+    private $network;
+
     protected function setUp(): void
     {
         $this->environment = new Environments();
+        $this->network = new Networks();
     }
 
     /** @test */
@@ -83,6 +87,38 @@ class ShortestPathsBasedOnAnIndex extends TestCase
         $this->assertSame(
             ['C1', 'D1', 'D2', 'D3', 'C3'],
             $shortestPath->between('C1', 'C3')
+        );
+    }
+
+    /** @test */
+    function constructing_a_path_based_on_the_information_of_the_network_index()
+    {
+        $network = $this->network->fromExample();
+
+        $shortestPath = StaticPathfinder::using(
+            FloydWarshallIndexer::operatingIn($network)->allShortestPaths(),
+            $network
+        );
+
+        $this->assertSame(['A', 'C', 'D'], $shortestPath->between('A', 'D'));
+        $this->assertSame(['D', 'B', 'A'], $shortestPath->between('D', 'A'));
+    }
+
+    /** @test */
+    function indexing_a_network_with_negative_cycles()
+    {
+        $network = $this->network->withNegativeCycles();
+
+        $shortestPath = StaticPathfinder::using(
+            FloydWarshallIndexer::operatingIn($network)->allShortestPaths(),
+            $network
+        );
+
+        $this->assertSame(
+            ['A', 'B', 'C', 'D'],
+            $shortestPath->between('A', 'D'),
+            'Indexing should work fine, but once the static pathfinder ' .
+            'encounters a cyclical reference, it will loop forever.'
         );
     }
 

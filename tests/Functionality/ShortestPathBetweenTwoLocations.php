@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stratadox\Pathfinder\Environment;
 use Stratadox\Pathfinder\Estimate\Estimate;
+use Stratadox\Pathfinder\FloydWarshallIndexer;
 use Stratadox\Pathfinder\Heuristic;
 use Stratadox\Pathfinder\DynamicPathfinder;
 use Stratadox\Pathfinder\NoPathAvailable;
@@ -144,6 +145,18 @@ class ShortestPathBetweenTwoLocations extends TestCase
         $this->assertStringEndsWith(
             '-> X1 -> Y1 -> Z1 -> AA1 -> AB1',
             $pathAsString
+        );
+    }
+
+    /** @test */
+    function finding_a_path_based_on_an_exact_heuristic()
+    {
+        $indexer = FloydWarshallIndexer::operatingIn($this->grid->fromExample());
+        $shortestPath = DynamicPathfinder::withHeuristic($indexer->heuristic());
+
+        $this->assertSame(
+            ['B1', 'A1', 'A2', 'A3', 'B3'],
+            $shortestPath->between('B1', 'B3')
         );
     }
 

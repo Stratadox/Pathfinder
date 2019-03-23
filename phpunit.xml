@@ -13,6 +13,9 @@
         <testsuite name="Efficiency">
             <directory suffix=".php">tests/Efficiency</directory>
         </testsuite>
+        <testsuite name="Sanity">
+            <directory suffix=".php">tests/Sanity</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
